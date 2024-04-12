@@ -4,7 +4,6 @@ using SpotOnAPI.V2.Models;
 
 namespace SpotOnAPI.V2.Controllers
 {
-    //Test
     [Route("api/[controller]")]
     [ApiController]
     public class CollarController : ControllerBase
