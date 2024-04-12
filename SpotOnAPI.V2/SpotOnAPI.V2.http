@@ -1,0 +1,6 @@
+@SpotOnAPI.V2_HostAddress = http://localhost:5133
+
+GET {{SpotOnAPI.V2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
