@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SpotOnAPI.V2.Interfaces;
 
 namespace SpotOnAPI.V2.Models.Repositories
@@ -31,7 +30,12 @@ namespace SpotOnAPI.V2.Models.Repositories
         public async Task<Collar> EditCollar(Collar collar)
         {
             var dbCollar = await _databaseContext.Collars.Where(x => x.CollarId == collar.CollarId)
-                .ExecuteUpdateAsync(x => x.SetProperty(x => x.Nickname, collar.Nickname));
+                .ExecuteUpdateAsync(x => x.SetProperty(x => x.UserId, collar.UserId)
+                    .SetProperty(x => x.Nickname, collar.Nickname)
+                    .SetProperty(x => x.Latitude, collar.Latitude)
+                    .SetProperty(x => x.Longitude, collar.Longitude)
+                    .SetProperty(x => x.Timestamp, collar.Timestamp)
+                    );
 
             return collar;
         }

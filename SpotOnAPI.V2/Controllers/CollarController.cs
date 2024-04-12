@@ -38,7 +38,6 @@ namespace SpotOnAPI.V2.Controllers
             return Ok(collars);
         }
 
-
         [HttpPut("EditCollar")]
         public async Task<IActionResult> EditCollar([FromBody] Collar collar)
         {
@@ -54,6 +53,5 @@ namespace SpotOnAPI.V2.Controllers
             var collar = await _collarRepository.DeleteCollar(id);
             return Ok(collar);
         }
-
     }
 }

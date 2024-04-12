@@ -16,6 +16,7 @@ builder.Services.AddDbContext<SpotOnDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICollarRepository, CollarRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddCors(opt =>
 {
