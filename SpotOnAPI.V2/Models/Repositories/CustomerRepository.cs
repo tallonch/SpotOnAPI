@@ -14,16 +14,25 @@ namespace SpotOnAPI.V2.Models.Repositories
 
         public async Task<Customer> CreateCustomer(Customer customer)
         {
-            _databaseContext.Customers.Add(customer);
-            await _databaseContext.SaveChangesAsync();
-
+            try
+            {
+                _databaseContext.Customers.Add(customer);
+                await _databaseContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Customer bad = new Customer();
+                bad.UserId = 99999;
+                return bad;
+            }
             return customer;
         }
 
         public async Task<bool> DeleteCustomer(int customerId)
         {
             var rows = await _databaseContext.Customers.Where(x => x.UserId == customerId).ExecuteDeleteAsync();
-
+            if (rows == 0)
+                return false;
             return true;
         }
 
@@ -35,7 +44,8 @@ namespace SpotOnAPI.V2.Models.Repositories
                     .SetProperty(x => x.LastName, customer.LastName)
                     .SetProperty(x => x.Password, customer.Password)
                     );
-
+            if (dbCustomer == 0)
+                return null;
             return customer;
         }
 

@@ -33,17 +33,33 @@ namespace SpotOnAPI.V2.Controllers
         [HttpGet("GetCustomerById/{id}")]
         public async Task<IActionResult> GetCustomerById(int id)
         {
-            var x = await _customerRepository.GetCustomerById(id);
-            if(x is null) 
-                return NotFound("Customer was not found :(");
-            return Ok(x);
+            try
+            {
+                var x = await _customerRepository.GetCustomerById(id);
+                if (x.Count == 0)
+                    return NotFound("Customer was not found :(");
+                return Ok(x);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
         {
-            var customers = await _customerRepository.CreateCustomer(customer);
-            return Ok(customers);
+            try
+            {
+                var customers = await _customerRepository.CreateCustomer(customer);
+                if (customers.UserId == 99999)
+                    return BadRequest("Customer already exists. :(");
+                return Ok(customers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("EditCustomer")]
@@ -58,8 +74,17 @@ namespace SpotOnAPI.V2.Controllers
         [HttpDelete("DeleteCollar")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = await _customerRepository.DeleteCustomer(id);
-            return Ok(customer);
+            try
+            {
+                var customer = await _customerRepository.DeleteCustomer(id);
+                if (customer == false)
+                    return NotFound("Customer was not found :(");
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
