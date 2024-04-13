@@ -8,6 +8,7 @@ namespace SpotOnAPI.V2.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
+        // Creating the variables for DB connection
         private readonly ICustomerRepository _customerRepository;
 
         public CustomerController(ICustomerRepository customerRepository)
@@ -18,8 +19,15 @@ namespace SpotOnAPI.V2.Controllers
         [HttpGet("GetCustomers")]
         public async Task<IActionResult> GetCustomers()
         {
-            var x = await _customerRepository.GetCustomers();
-            return Ok(x);
+            try
+            {
+                var x = await _customerRepository.GetCustomers();
+                return Ok(x);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("GetCustomerById/{id}")]

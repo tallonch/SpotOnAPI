@@ -39,7 +39,7 @@ public partial class SpotOnDbContext : DbContext
                 .HasColumnType("decimal(6, 4)")
                 .HasColumnName("LATITUDE");
             entity.Property(e => e.Longitude)
-                .HasColumnType("decimal(6, 4)")
+                .HasColumnType("decimal(7, 4)")
                 .HasColumnName("LONGITUDE");
             entity.Property(e => e.Nickname)
                 .HasMaxLength(255)
